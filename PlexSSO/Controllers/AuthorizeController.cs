@@ -15,27 +15,27 @@ namespace PlexSSO.Controllers
         [HttpGet]
         [Route("authorize")]
         public async Task<IActionResult> Authorize(
-            [FromQuery] string client_id,
-            [FromQuery] string redirect_uri,
-            [FromQuery] string response_type,
-            [FromQuery] string scope,
-            [FromQuery] string state,
-            [FromQuery(Name = "code_challenge")] string codeChallenge,
-            [FromQuery(Name = "code_challenge_method")] string codeChallengeMethod,
+            [FromQuery(Name = "client_id")] string clientId,
+            [FromQuery(Name = "redirect_uri")] string redirectUri,
+            [FromQuery(Name = "response_type")] string responseType,
+            [FromQuery(Name = "state")] string state,
+            [FromQuery(Name = "scope")] string? scope,
+            [FromQuery(Name = "code_challenge")] string? codeChallenge,
+            [FromQuery(Name = "code_challenge_method")] string? codeChallengeMethod,
             CancellationToken ctx = default)
         {
-            if (response_type != "code")
+            if (responseType != "code")
             {
                 return BadRequest("Only response_type=code supported");
             }
 
-            var client = await db.Clients.FirstOrDefaultAsync(c => c.ClientId == client_id && c.Enabled, ctx);
+            var client = await db.Clients.FirstOrDefaultAsync(c => c.ClientId == clientId && c.Enabled, ctx);
             if (client is null) 
             {
                 return BadRequest("Unknown or disabled client");
             }
 
-            if (!string.Equals(client.RedirectUri, redirect_uri, StringComparison.Ordinal))
+            if (!string.Equals(client.RedirectUri, redirectUri, StringComparison.Ordinal))
             {
                 return BadRequest("Invalid redirect_uri");
             }
@@ -44,8 +44,8 @@ namespace PlexSSO.Controllers
 
             var authTxnId = await codes.CreateAuthTxnAsync(new AuthTxn
             {
-                ClientId = client_id,
-                RedirectUri = redirect_uri,
+                ClientId = clientId,
+                RedirectUri = redirectUri,
                 State = state,
                 CodeChallenge = codeChallenge,
                 CodeChallengeMethod = string.IsNullOrWhiteSpace(codeChallengeMethod)
@@ -59,7 +59,7 @@ namespace PlexSSO.Controllers
 
             return Redirect($"/PlexAuthorize?plexCode={Uri.EscapeDataString(pin.Code)}" +
                             $"&verifyUrl={Uri.EscapeDataString("https://www.plex.tv/link/")}" +
-                            $"&redirectUri={Uri.EscapeDataString(redirect_uri)}" +
+                            $"&redirectUri={Uri.EscapeDataString(redirectUri)}" +
                             $"&state={Uri.EscapeDataString(state)}" +
                             $"&txnId={Uri.EscapeDataString(authTxnId)}");
         }

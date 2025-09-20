@@ -124,7 +124,7 @@ namespace PlexSSO
             {
                 var hash = SimplePasswordHasher.Hash(pwdFromCfg, adminUser.PasswordSalt);
 
-                if (adminUser.PasswordHash == hash)
+                if (adminUser.PasswordHash != hash)
                 {
                     adminUser.PasswordHash = hash;
 
