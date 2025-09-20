@@ -53,6 +53,7 @@ services:
       - ConnectionStrings__DefaultConnection=Data Source=/app/db/plex-oidc-bridge.db;
       - Admin__Username=admin
       - Admin__Password=admin
+      - Plex__ClientIdentifier=<random guid>
       - SSO__Issuer=https://your-plex-sso-url
       - Plex__ClientIdentifier=your-identifier
     volumes:
