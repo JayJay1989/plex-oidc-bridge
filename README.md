@@ -2,7 +2,7 @@
 
 A lightweight **.NET 8** OIDC Provider that lets you use **Plex login** as an Identity Provider inside **Keycloak** or any OpenID Connect client.
 
-?? Uses Plex’s official **PIN-based authentication flow**  
+?? Uses Plexâ€™s official **PIN-based authentication flow**  
 ?? Exposes standard OIDC endpoints (`/.well-known/openid-configuration`, `/authorize`, `/token`, `/jwks`, `/userinfo`)  
 ?? Includes an **Admin Panel** to manage OIDC clients (CRUD UI with session-based login `/admin`)  
 
@@ -11,7 +11,7 @@ A lightweight **.NET 8** OIDC Provider that lets you use **Plex login** as an Id
 ## ? Features
 
 - Full **OIDC provider** implementation (Authorization Code Flow + PKCE).  
-- **Plex PIN login** flow auto-opens Plex’s site, polls until approved, and returns to Keycloak.  
+- **Plex PIN login** flow auto-opens Plexâ€™s site, polls until approved, and returns to Keycloak.  
 - **SQLite + EF Core** persistence (sessions, codes, keys, clients, admin users).  
 - **RSA key** stored in DB, exposed via JWKS for token validation.  
 - **Admin Panel** (Razor Pages) with CRUD for clients:  
@@ -44,7 +44,7 @@ example `docker-compose.yml`
 services:
   minecraft-notifier:
     container_name: plex-sso
-    image: ghcr.io/jayjay1989_/plexsso:latest
+    image: ghcr.io/jayjay1989/plexsso:latest
     restart: unless-stopped
     ports:
       - 8080:8080
