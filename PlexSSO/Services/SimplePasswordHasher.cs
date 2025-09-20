@@ -9,6 +9,10 @@ namespace PlexSSO.Services
             salt = RandomNumberGenerator.GetBytes(16);
             hash = Rfc2898DeriveBytes.Pbkdf2(password, salt, 100_000, HashAlgorithmName.SHA256, 32);
         }
+        public static byte[] Hash(string password, byte[] salt)
+        {
+            return Rfc2898DeriveBytes.Pbkdf2(password, salt, 100_000, HashAlgorithmName.SHA256, 32);
+        }
 
         public static bool Verify(string password, byte[] hash, byte[] salt)
         {

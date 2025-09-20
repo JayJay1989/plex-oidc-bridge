@@ -120,6 +120,20 @@ namespace PlexSSO
                 db.SaveChanges();
                 logger.LogInformation("Seeded admin user '{User}'.", userFromCfg);
             }
+            else
+            {
+                var hash = SimplePasswordHasher.Hash(pwdFromCfg, adminUser.PasswordSalt);
+
+                if (adminUser.PasswordHash == hash)
+                {
+                    adminUser.PasswordHash = hash;
+
+                    db.AdminUsers.Update(adminUser);
+
+                    db.SaveChanges();
+                    logger.LogInformation("Updated password for user '{User}'.", userFromCfg);
+                }
+            }
 
             if (pwdFromCfg == "admin")
             {
