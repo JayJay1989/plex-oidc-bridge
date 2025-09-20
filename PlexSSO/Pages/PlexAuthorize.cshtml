@@ -1,0 +1,32 @@
+﻿@page
+@model PlexSSO.Pages.PlexAuthorizeModel
+<!doctype html>
+<html>
+<head>
+    <title>Plex Sign-In</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            padding: 2rem;
+            max-width: 620px;
+            margin: auto
+        }
+    </style>
+</head>
+<body>
+    <h1>Sign in with Plex</h1>
+    <p>
+        We opened Plex in a new tab. If it didn't open,
+        <a href="@Model.VerifyUrl" target="_blank" rel="noopener">click here</a>, then approve the sign-in.
+    </p>
+    <p><strong>Code:</strong> @Model.PlexCode</p>
+    <script>
+        const redirectUri = "@Model.RedirectUri";
+        const verifyUrl = "@Model.VerifyUrl";
+        const state = "@Model.State";
+        const txnId = "@Model.TxnId";
+    </script>
+    <script src="~/assets/js/script.js" asp-append-version="true"></script>
+</body>
+</html>

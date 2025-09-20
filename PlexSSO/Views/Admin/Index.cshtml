@@ -1,0 +1,160 @@
+﻿@model PlexSSO.ViewModels.Admin.AdminIndexModel
+@{
+    Layout = null;
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin – Clients</title>
+    <style>
+        body {
+            margin: 0;
+            background: #f8fafc;
+            font-family: system-ui,Segoe UI,Roboto
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            background: #0f172a;
+            color: #fff
+        }
+
+        main {
+            max-width: 960px;
+            margin: 22px auto;
+            padding: 0 16px
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden
+        }
+
+        th, td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #e5e7eb
+        }
+
+        th {
+            background: #f8fafc;
+            text-align: left;
+            font-weight: 700
+        }
+
+        tr:last-child td {
+            border-bottom: 0
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: #2563eb;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600
+        }
+
+            .btn.sec {
+                background: #e5e7eb;
+                color: #111827
+            }
+
+        .toolbar {
+            display: flex;
+            gap: 8px
+        }
+
+        .muted {
+            color: #64748b
+        }
+
+        form {
+            display: inline
+        }
+
+        input, select {
+            padding: 8px 10px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px
+        }
+
+        .row-1 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <strong>Admin</strong>
+        <form asp-action="Logout" method="post"><button class="btn sec" type="submit">Logout</button></form>
+    </header>
+
+    <main>
+        <section class="card">
+            <h3 style="margin:0 0 10px">Add Client</h3>
+            <form asp-action="OnPostIndexCreate" method="post" class="row">
+                @Html.TextBoxFor(model => model.Post.ClientId, new { required = true, placeholder = "ClientID" })
+                @Html.TextBoxFor(model => model.Post.ClientSecret, new { placeholder = "ClientSecret (optional)" })
+                <div class="row-1">
+                    @Html.TextBoxFor(model => model.Post.RedirectUri, new { required = true, placeholder = "Redirect Url" })
+                </div>
+                <div><button class="btn" type="submit">Create</button></div>
+            </form>
+        </section>
+
+        <table aria-label="Clients">
+            <thead>
+                <tr>
+                    <th>ClientId</th>
+                    <th>Redirect URI</th>
+                    <th>Secret</th>
+                    <th>Enabled</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var c in Model.Clients)
+                {
+                    <tr>
+                        <td>@c.ClientId</td>
+                        <td>@c.RedirectUri</td>
+                        <td>@(string.IsNullOrEmpty(c.ClientSecret) ? "<none>" : "set")</td>
+                        <td>@(c.Enabled ? "Yes" : "No")</td>
+                        <td class="toolbar">
+                            <a class="btn sec" href="/admin/edit/@c.Id">Edit</a>
+                            <a class="btn sec" href="/admin/delete/@c.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>

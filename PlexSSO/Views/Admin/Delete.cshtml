@@ -1,0 +1,28 @@
+﻿@model AdminDeleteClientModel
+@{
+    Layout = null;
+}
+<!doctype html>
+<html>
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Delete Client</title>
+    <style>
+    body{margin:0;background:#f8fafc;font-family:system-ui,Segoe UI,Roboto}
+    main{max-width:700px;margin:24px auto;padding:0 16px}
+    .card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:16px}
+    .btn{padding:10px 14px;border-radius:10px;border:0;background:#dc2626;color:#fff;font-weight:600}
+    a{color:#2563eb;text-decoration:none}
+  </style>
+</head>
+<body>
+<main>
+    <p><a asp-action="Index">← Back</a></p>
+    <section class="card">
+        <h3>Delete @Model.Item?.ClientId</h3>
+        <p>This action cannot be undone.</p>
+        <form asp-action="OnPostDelete" method="post">
+            <button class="btn" type="submit">Delete</button>
+        </form>
+    </section>
+</main>
+</body>
+</html>

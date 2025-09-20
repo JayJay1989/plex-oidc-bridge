@@ -1,0 +1,35 @@
+﻿@model PlexSSO.ViewModels.Admin.AdminLoginModel
+@{
+    Layout = null;
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin – Login</title>
+    <style>
+    body{margin:0;display:grid;place-items:center;height:100vh;background:#f3f4f6;font-family:system-ui,Segoe UI,Roboto}
+    .card{width:380px;background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:22px;box-shadow:0 10px 24px rgba(0,0,0,.08)}
+    h1{margin:0 0 12px;font-size:18px}
+    .row{display:grid;gap:10px}
+    input{padding:10px 12px;border:1px solid #e5e7eb;border-radius:10px}
+    button{padding:10px 12px;border-radius:10px;border:0;background:#2563eb;color:#fff;font-weight:600;cursor:pointer}
+    .err{color:#b91c1c;margin:8px 0 0}
+  </style>
+</head>
+<body>
+<div class="card">
+    <h1>Admin login</h1>
+    <form asp-action="LoginPost" method="post" class="row">
+        @Html.TextBoxFor(model => model.Username, new { autcomplete = "username", placeholder = "Username"})
+        @Html.PasswordFor(model => model.Password, new { autcomplete = "current-password", placeholder = "Password" })
+        <button type="submit">Sign in</button>
+    </form>
+    @if (!string.IsNullOrEmpty(Model.Error))
+    {
+        <div class="err">@Model.Error</div>
+    }
+</div>
+</body>
+</html>
