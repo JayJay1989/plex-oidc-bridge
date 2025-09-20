@@ -51,8 +51,8 @@ services:
     environment:
       - TZ=Europe/Brussels
       - ConnectionStrings__DefaultConnection=Data Source=/app/db/plex-oidc-bridge.db;
-      - AdminUser__Username=admin
-      - AdminUser__Password=admin
+      - Admin__Username=admin
+      - Admin__Password=admin
       - SSO__Issuer=https://your-plex-sso-url
       - Plex__ClientIdentifier=your-identifier
     volumes:
